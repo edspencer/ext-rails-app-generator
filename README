@@ -13,3 +13,4 @@ git submodule add -b v0.4 git://github.com/edspencer/ext-mvc.git public/javascri
 
 == Optionally adds the following submodules
 git submodule add git://github.com/rails/rails.git vendor/rails
+git submodule add git://github.com/technoweenie/restful-authentication.git vendor/plugins/restful_authentication
