@@ -1,0 +1,3 @@
+== Ext Rails Application Generator
+
+A Rails application to generate other rails applications using the Ext-MVC library on top of ExtJS (http://www.extjs.com)
