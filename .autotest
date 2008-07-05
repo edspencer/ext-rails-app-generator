@@ -1,0 +1,31 @@
+# require 'autotest/redgreen'
+# require 'autotest/growl'
+
+module Autotest::Growl
+ 
+  def self.growl title, msg, img="/Applications/Mail.app/Contents/Resources/Caution.tiff", pri=0
+    title += " in #{Dir.pwd}"
+    msg += " at #{Time.now.strftime("%I:%M %p")}"
+    system "growlnotify -n autotest --image #{img} -p #{pri} -m #{msg.inspect} #{title}"
+  end
+ 
+  Autotest.add_hook :run do  |at|
+     growl "autotest running", "Started"
+   end
+ 
+   Autotest.add_hook :red do |at|
+     img = "/Users/eggspencer/.autotest_images/rails_fail.png"
+     growl "Tests Failed", "#{at.files_to_test.size} tests failed", img, 2
+   end
+ 
+   Autotest.add_hook :green do |at|
+     img = "/Users/eggspencer/.autotest_images/rails_ok.png"
+     growl "Tests Passed", "Tests passed", img, -2 if at.tainted
+   end
+ 
+   Autotest.add_hook :all_good do |at|
+     img = "/Users/eggspencer/.autotest_images/rails_fail.png"
+     growl "Tests Passed", "All tests passed", img, -2 if at.tainted
+   end
+ 
+end
