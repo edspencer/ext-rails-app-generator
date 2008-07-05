@@ -7,18 +7,21 @@
 [submodule "vendor/plugins/rspec"]
 	path = vendor/plugins/rspec
 	url = git://github.com/dchelimsky/rspec.git
-[submodule "vendor/plugins/rspec-rails"]
-	path = vendor/plugins/rspec-rails
-	url = git://github.com/dchelimsky/rspec-rails.git
-[submodule "vendor/plugins/rspec-on-rails-matchersgit"]
-	path = vendor/plugins/rspec-on-rails-matchersgit
-	url = git://github.com/joshknowles/rspec-on-rails-matchers.git
-[submodule "public/javascripts/ext_mvc"]
-	path = public/javascripts/ext_mvc
-	url = git://github.com/edspencer/ext-mvc.git
 [submodule "vendor/plugins/exception_notification"]
 	path = vendor/plugins/exception_notification
 	url = git://github.com/rails/exception_notification.git
 [submodule "vendor/plugins/restful_authentication"]
 	path = vendor/plugins/restful_authentication
 	url = git://github.com/technoweenie/restful-authentication.git
+[submodule "vendor/plugins/rspec_rails"]
+	path = vendor/plugins/rspec_rails
+	url = git://github.com/dchelimsky/rspec-rails.git
+[submodule "vendor/plugins/rspec_on_rails_matchers"]
+	path = vendor/plugins/rspec_on_rails_matchers
+	url = git://github.com/joshknowles/rspec-on-rails-matchers.git
+[submodule "vendor/plugins/ext_mvc_rails"]
+	path = vendor/plugins/ext_mvc_rails
+	url = git://github.com/edspencer/ext-mvc-rails.git
+[submodule "public/javascripts/ext-mvc"]
+	path = public/javascripts/ext-mvc
+	url = git://github.com/edspencer/ext-mvc.git

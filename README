@@ -5,11 +5,11 @@ A Rails application to generate other rails applications using the Ext-MVC libra
 == Adds the following submodules
 git submodule add git://github.com/nex3/haml.git vendor/plugins/haml
 git submodule add git://github.com/dchelimsky/rspec.git vendor/plugins/rspec
-git submodule add git://github.com/dchelimsky/rspec-rails.git vendor/plugins/rspec-rails
-git submodule add git://github.com/joshknowles/rspec-on-rails-matchers.git vendor/plugins/rspec-on-rails-matchers
+git submodule add git://github.com/dchelimsky/rspec-rails.git vendor/plugins/rspec_rails
+git submodule add git://github.com/joshknowles/rspec-on-rails-matchers.git vendor/plugins/rspec_on_rails_matchers
 git submodule add git://github.com/rails/exception_notification.git vendor/plugins/exception_notification
-git submodule add git://github.com/edspencer/ext-mvc-rails.git vendor/plugins/ext-mvc-rails
-git submodule add -b v0.4 git://github.com/edspencer/ext-mvc.git public/javascripts/ext_mvc
+git submodule add git://github.com/edspencer/ext-mvc-rails.git vendor/plugins/ext_mvc_rails
+git submodule add -b v0.4 git://github.com/edspencer/ext-mvc.git public/javascripts/ext-mvc
 
 == Optionally adds the following submodules
 git submodule add git://github.com/rails/rails.git vendor/rails
