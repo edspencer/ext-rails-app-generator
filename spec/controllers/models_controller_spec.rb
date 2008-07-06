@@ -190,7 +190,7 @@ describe ModelsController do
       it "should redirect to the created model" do
         Model.stub!(:new).and_return(mock_model)
         post :create, :model => {}
-        response.should redirect_to(model_url(mock_model))
+        response.should redirect_to(site_models_url(mock_model))
       end
       
     end
@@ -242,7 +242,7 @@ describe ModelsController do
       it "should redirect to the model" do
         Model.stub!(:find).and_return(mock_model)
         put :update, :id => "1"
-        response.should redirect_to(model_url(mock_model))
+        response.should redirect_to(site_models_url(mock_model))
       end
 
     end

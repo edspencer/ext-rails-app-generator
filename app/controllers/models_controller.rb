@@ -45,7 +45,7 @@ class ModelsController < ApplicationController
     respond_to do |format|
       if @model.save
         flash[:notice] = 'Model was successfully created.'
-        format.html { redirect_to(@model) }
+        format.html { redirect_to(site_models_path(@model)) }
         format.xml  { render :xml => @model, :status => :created, :location => @model }
       else
         format.html { render :action => "new" }
@@ -62,7 +62,7 @@ class ModelsController < ApplicationController
     respond_to do |format|
       if @model.update_attributes(params[:model])
         flash[:notice] = 'Model was successfully updated.'
-        format.html { redirect_to(@model) }
+        format.html { redirect_to(site_models_path(@model)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -78,7 +78,7 @@ class ModelsController < ApplicationController
     @model.destroy
 
     respond_to do |format|
-      format.html { redirect_to(site_models_url(@model.site)) }
+      format.html { redirect_to(site_models_path(@model.site)) }
       format.xml  { head :ok }
     end
   end
