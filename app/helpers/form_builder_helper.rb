@@ -5,7 +5,7 @@ module FormBuilderHelper
 end
 
 class GenericFormBuilder < ActionView::Helpers::FormBuilder
-  (field_helpers  + %w(select) - %w(apply_form_for_options!)).each do |selector|
+  (field_helpers  + %w(select) - %w(apply_form_for_options! radio_button)).each do |selector|
     src = <<-END_SRC
       def #{selector}(field, options={})
         label = (options.delete(:label) || field.to_s.humanize)

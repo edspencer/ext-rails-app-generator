@@ -4,11 +4,12 @@
     %title Rails Application Generator
     = stylesheet_link_tag 'blueprint/screen', :media => "screen, projection"
     = stylesheet_link_tag 'blueprint/print', :media => "print"
-    = stylesheet_link_tag 'layout', :cache => 'front_end_styles'
+    = stylesheet_link_tag 'layout', 'sites', :cache => 'front_end_styles'
     = ie_stylesheet 'blueprint/ie'
     = yield :head
   %body
-    = render :partial => 'layouts/flashes'
-    = yield
-    #footer
-      = yield :after
+    #wrapper
+      = render :partial => 'layouts/flashes'
+      = yield
+      #footer
+        = yield :after

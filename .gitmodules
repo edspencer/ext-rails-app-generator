@@ -25,3 +25,6 @@
 [submodule "public/javascripts/ext-mvc"]
 	path = public/javascripts/ext-mvc
 	url = git://github.com/edspencer/ext-mvc.git
+[submodule "vendor/plugins/will_paginate"]
+	path = vendor/plugins/will_paginate
+	url = git://github.com/mislav/will_paginate.git

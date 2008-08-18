@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080705140622) do
+ActiveRecord::Schema.define(:version => 20080818201909) do
 
   create_table "models", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,12 @@ ActiveRecord::Schema.define(:version => 20080705140622) do
     t.integer "user_id"
     t.string  "name"
     t.string  "state"
+    t.string  "scm"
+    t.string  "rails_version"
+    t.boolean "vendor_rails",   :default => false
+    t.string  "test_framework"
+    t.string  "views_type"
+    t.boolean "capify",         :default => false
   end
 
   create_table "users", :force => true do |t|

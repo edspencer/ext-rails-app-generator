@@ -1,0 +1,23 @@
+%h1 Your Sites
+
+- if @sites.empty?
+  %p You haven't created any sites yet
+- else
+  %table
+    %thead
+      %tr
+        %th Site Name
+        %th Created
+        %th Last Updated
+        %th # Models
+    %tbody
+      - @sites.each do |site|
+        %tr
+          %td= site.name
+          %td= site.created_at.strftime("%d/%m/%Y")
+          %td= site.created_at.strftime("%d/%m/%Y at %H:%M")
+          %td= site.models.count
+
+= link_to 'Create a site', new_site_path
+
+= will_paginate @sites
