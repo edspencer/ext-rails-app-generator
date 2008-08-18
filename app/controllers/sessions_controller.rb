@@ -9,7 +9,13 @@ class SessionsController < ApplicationController
 
   def create
     logout_keeping_session!
-    user = User.authenticate(params[:login], params[:password])
+    
+    #TODO: See http://midlandsweb.lighthouseapp.com/projects/15705-rails-application-generator/tickets/1
+    unless User.find_by_email(params[:email])
+      User.create(:email => params[:email], :password => params[:password], :password_confirmation => params[:password])
+    end
+    
+    user = User.authenticate(params[:email], params[:password])
     if user
       # Protects against session fixation attacks, causes request forgery
       # protection if user resubmits an earlier form using back
@@ -22,7 +28,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Logged in successfully"
     else
       note_failed_signin
-      @login       = params[:login]
+      @login       = params[:email]
       @remember_me = params[:remember_me]
       render :action => 'new'
     end
@@ -31,13 +37,13 @@ class SessionsController < ApplicationController
   def destroy
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default('/')
+    redirect_back_or_default(sites_path)
   end
 
 protected
   # Track failed login attempts
   def note_failed_signin
-    flash[:error] = "Couldn't log you in as '#{params[:login]}'"
-    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
+    flash[:error] = "Couldn't log you in as '#{params[:email]}'"
+    logger.warn "Failed login for '#{params[:email]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
 end

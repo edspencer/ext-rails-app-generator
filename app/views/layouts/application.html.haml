@@ -1,0 +1,14 @@
+!!! Strict
+%html{:xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => "en", :lang => "en"}
+  %head
+    %title Rails Application Generator
+    = stylesheet_link_tag 'blueprint/screen', :media => "screen, projection"
+    = stylesheet_link_tag 'blueprint/print', :media => "print"
+    = stylesheet_link_tag 'layout', :cache => 'front_end_styles'
+    = ie_stylesheet 'blueprint/ie'
+    = yield :head
+  %body
+    = render :partial => 'layouts/flashes'
+    = yield
+    #footer
+      = yield :after

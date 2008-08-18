@@ -1,0 +1,45 @@
+.notice {
+background:#e5f7e3 url(/images/check.gif) no-repeat;
+background-position:7px 7px;
+border:1px solid #c5e1c8;
+font-weight:700;
+color:#005e20;
+padding:8px 8px 8px 28px;
+margin-bottom: 10px;
+}
+
+.error, .errorExplanation {
+background:#ffebeb url(/images/x.gif) no-repeat;
+background-position:7px 7px;
+border:1px solid #f5c1c2;
+font-weight:700;
+color:#9e0b0f;
+padding:8px 8px 8px 28px;
+margin-bottom: 10px;
+}
+
+.errorExplanation h2 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+.warning {
+background:#fffeeb url(/images/warning.gif) no-repeat;
+background-position:7px 7px;
+border:1px solid #e6e5d8;
+font-weight:700;
+color:#555;
+padding:8px 8px 8px 28px;
+margin-bottom: 10px;
+}
+
+.question {
+background:#e8f8fe url(/images/question.gif) no-repeat;
+background-position:7px 7px;
+border:1px solid #cfdfe5;
+font-weight:700;
+color:#004a80;
+padding:8px 8px 8px 28px;
+margin-bottom: 10px;
+}

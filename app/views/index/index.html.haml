@@ -1,0 +1,26 @@
+.what
+  %h1 The Rails Application Generator
+  %p
+    An
+    = link_to 'open source', 'http://github.com/edspencer/ext-rails-app-generator'
+    Rails application generator which automates all the cruft you still have to do for every app.
+
+.why
+  %h2 Why you should use it
+  %p The Generator automates most of the tasks you usually perform when setting up a new Rails application.  
+  
+.go
+  %h2 Get Started
+  %p Your generated apps are saved for reuse later (you can delete them if you want).  To get started, just enter an email address and a password.
+  - form_tag(session_path, :class => 'login') do |f|
+    .div
+      %label{:for => 'email'} Email Address:
+      = text_field_tag :email
+    .div
+      %label{:for => 'password'} Password:
+      = password_field_tag :password
+    .div
+      %label{:for => 'remember_me'} Remember Me:
+      = check_box_tag :remember_me
+    .div
+      = submit_tag 'Login / Create Account'
