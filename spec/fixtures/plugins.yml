@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  remote_url: MyString
+  local_path: MyString
+  generator_name: MyString
+  default_generator_argument: MyText
+
+two:
+  remote_url: MyString
+  local_path: MyString
+  generator_name: MyString
+  default_generator_argument: MyText
