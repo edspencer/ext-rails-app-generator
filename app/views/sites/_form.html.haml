@@ -48,7 +48,10 @@
   
 %fieldset
   %legend Plugins
-  
+  - @plugins.each do |plugin|
+    .formRow
+      = check_box_tag "site[plugin_ids][]", plugin.id, @site.plugins.include?(plugin), :id => "plugin_#{plugin.id}"
+      %label{:for => "plugin_#{plugin.id}"}= plugin.name
   
 %fieldset
   %legend Deployment

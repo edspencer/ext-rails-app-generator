@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080820175727) do
+ActiveRecord::Schema.define(:version => 20080820183047) do
 
   create_table "models", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(:version => 20080820175727) do
     t.string   "generator_name"
     t.text     "default_generator_argument"
     t.boolean  "selected_by_default",        :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "selected_plugins", :force => true do |t|
+    t.integer  "site_id"
+    t.integer  "plugin_id"
+    t.text     "generator_argument"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

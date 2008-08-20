@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  site_id: 1
+  plugin_id: 1
+  generator_argument: MyText
+
+two:
+  site_id: 1
+  plugin_id: 1
+  generator_argument: MyText

@@ -1,6 +1,7 @@
 class SitesController < ApplicationController
   
-  before_filter :find_site, :only => [:edit, :show, :update, :destroy]
+  before_filter :find_site,    :only => [:edit, :show, :update, :destroy]
+  before_filter :find_plugins, :only => [:new, :edit]
   
   # GET /sites
   # GET /sites.xml
@@ -88,5 +89,9 @@ class SitesController < ApplicationController
     respond_to do |format|
       format.html {flash[:errors] = "Couldn't find that site"; redirect_to(sites_path);}
     end
+  end
+  
+  def find_plugins
+    @plugins = Plugin.all
   end
 end
