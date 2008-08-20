@@ -1,0 +1,13 @@
+%h1= @site.name
+%p
+  = link_to '&laquo; Back to my sites', sites_path
+  |
+  = link_to 'Edit this site', edit_site_path(@site)
+  |
+  = link_to 'Clone this site', '#'
+
+%h2 Models
+
+- form_tag(generate_site_path(@site)) do
+  .submitRow
+    = submit_tag "Generate"

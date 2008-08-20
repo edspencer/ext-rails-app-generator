@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :sites do |site|
+  map.resources :sites, :member => {:generate => :post} do |site|
     site.resources :models do |model|
       model.resources :fields
     end

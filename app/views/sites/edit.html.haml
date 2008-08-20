@@ -1,0 +1,10 @@
+%h1= "Edit #{@site.name}"
+
+- form_for(@site) do |f|
+  = render :partial => 'form', :locals => {:f => f}
+  .submitRow
+    = f.submit "Update"
+
+= link_to 'Show', @site
+|
+= link_to 'Back', sites_path

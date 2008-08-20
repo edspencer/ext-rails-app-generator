@@ -1,66 +1,7 @@
 %h1 Create a new Site
 
 - form_for(@site) do |f|
-  = f.error_messages
-  .formRow.name
-    %label{:for => 'site_name'} Site Name:
-    = f.text_field :name
-  %fieldset
-    %legend SCM
-    = f.radio_button :scm, 'git'
-    %label{:for => 'site_scm_git'} Git
-    
-    = f.radio_button :scm, 'svn'
-    %label{:for => 'site_scm_svn'} Subversion
-    
-    = f.radio_button :scm, 'none'
-    %label{:for => 'site_scm_none'} No SCM
-    
-  %fieldset
-    %legend Rails Version
-    = f.radio_button :rails_version, 'edge'
-    %label{:for => 'site_rails_version_edge'} Edge
-    
-    = f.radio_button :rails_version, 'v2.1.0', :id => 'site_rails_version_2_1'
-    %label{:for => 'site_rails_version_2_1'} 2.1
-    
-    = f.radio_button :rails_version, 'v2.0.0', :id => 'site_rails_version_2_0'
-    %label{:for => 'site_rails_version_2_0'} 2.0
-    
-    = f.check_box :vendor_rails
-    %label{:for => 'site_vendor_rails'} Include in Vendor
-    
-  %fieldset
-    %legend Testing
-    = f.radio_button :test_framework, 'rspec'
-    %label{:for => 'site_test_framework_rspec'} Rspec
-    
-    = f.radio_button :test_framework, 'test_unit'
-    %label{:for => 'site_test_framework_test_unit'} Test Unit
-    
-  %fieldset
-    %legend Views
-    = f.radio_button :views_type, 'haml'
-    %label{:for => 'site_views_type_haml'} Haml
-    
-    = f.radio_button :views_type, 'erb'
-    %label{:for => 'site_views_type_erb'} ERB
-    
-    = f.radio_button :views_type, 'extjs'
-    %label{:for => 'site_views_type_extjs'} Ext JS
-    
-  %fieldset
-    %legend Plugins
-    
-    
-  %fieldset
-    %legend Deployment
-    = f.check_box :capify
-    %label{:for => 'site_capify'} Capify with Capistrano
-    
-  %fieldset
-    %legend Save Options
-    
+  = render :partial => 'form', :locals => {:f => f}
   .submitRow
     = submit_tag 'Set up my Models &raquo;'#
 

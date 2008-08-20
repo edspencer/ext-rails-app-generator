@@ -3,3 +3,7 @@ body {
   margin: 10px auto;
   background: url(/images/background_body.gif) repeat-x;
 }
+
+form .fieldWithErrors input {
+  border: 2px solid red;
+}

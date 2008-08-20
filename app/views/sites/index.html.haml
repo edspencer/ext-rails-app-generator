@@ -13,9 +13,9 @@
     %tbody
       - @sites.each do |site|
         %tr
-          %td= site.name
+          %td= link_to site.name, site
           %td= site.created_at.strftime("%d/%m/%Y")
-          %td= site.created_at.strftime("%d/%m/%Y at %H:%M")
+          %td= site.updated_at.strftime("%d/%m/%Y at %H:%M")
           %td= site.models.count
 
 = link_to 'Create a site', new_site_path

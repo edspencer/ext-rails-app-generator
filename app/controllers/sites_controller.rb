@@ -1,4 +1,7 @@
 class SitesController < ApplicationController
+  
+  before_filter :find_site, :only => [:edit, :show, :update, :destroy]
+  
   # GET /sites
   # GET /sites.xml
   def index
@@ -13,8 +16,6 @@ class SitesController < ApplicationController
   # GET /sites/1
   # GET /sites/1.xml
   def show
-    @site = Site.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @site }
@@ -34,13 +35,13 @@ class SitesController < ApplicationController
 
   # GET /sites/1/edit
   def edit
-    @site = Site.find(params[:id])
   end
 
   # POST /sites
   # POST /sites.xml
   def create
     @site = Site.new(params[:site])
+    @site.user = current_user
 
     respond_to do |format|
       if @site.save
@@ -57,8 +58,6 @@ class SitesController < ApplicationController
   # PUT /sites/1
   # PUT /sites/1.xml
   def update
-    @site = Site.find(params[:id])
-
     respond_to do |format|
       if @site.update_attributes(params[:site])
         flash[:notice] = 'Site was successfully updated.'
@@ -74,12 +73,20 @@ class SitesController < ApplicationController
   # DELETE /sites/1
   # DELETE /sites/1.xml
   def destroy
-    @site = Site.find(params[:id])
     @site.destroy
 
     respond_to do |format|
       format.html { redirect_to(sites_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  protected
+  def find_site
+    @site = current_user.sites.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    respond_to do |format|
+      format.html {flash[:errors] = "Couldn't find that site"; redirect_to(sites_path);}
     end
   end
 end
