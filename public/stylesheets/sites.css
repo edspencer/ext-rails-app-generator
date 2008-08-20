@@ -1,13 +1,18 @@
-form.new_site .name {
+form.site .name {
   text-align: center;
   font-size: 20px;
   margin-bottom: 5px;
 }
 
-form.new_site .name label {
+form.site .name label {
   padding-right: 20px;
 }
 
-form.new_site .name input {
+form.site .name input {
   font-size: 20px;
+}
+
+form.site fieldset .notice {
+  float: right;
+  width: 50%;
 }

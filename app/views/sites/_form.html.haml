@@ -36,6 +36,12 @@
   %label{:for => 'site_test_framework_test_unit'} Test Unit
   
 %fieldset
+  .notice
+    Selecting Ext JS will automatically install the latest Ext JS library as well as the latest Ext MVC library into public/javascripts.  It will also attempt to build an admin section using the Ext JS and Ext MVC frameworks.  For more information see 
+    = link_to 'Ext JS', 'http://extjs.com/products/extjs/'
+    and 
+    = link_to 'Ext MVC', 'http://github.com/edspencer/ext-mvc'
+    = "."
   %legend Views
   = f.radio_button :views_type, 'haml'
   %label{:for => 'site_views_type_haml'} Haml
@@ -47,10 +53,11 @@
   %label{:for => 'site_views_type_extjs'} Ext JS
   
 %fieldset
+  .notice Selected plugins will be installed automatically into vendor/plugins.  If you select an SCM above it will do the sensible thing (Piston if you choose SVN or install as a Submodule if you choose git).
   %legend Plugins
   - @plugins.each do |plugin|
     .formRow
-      = check_box_tag "site[plugin_ids][]", plugin.id, @site.plugins.include?(plugin), :id => "plugin_#{plugin.id}"
+      = check_box_tag "site[plugin_ids][]", plugin.id, should_check_plugin?(@site, plugin), :id => "plugin_#{plugin.id}"
       %label{:for => "plugin_#{plugin.id}"}= plugin.name
   
 %fieldset

@@ -1,6 +1,6 @@
 %h1 Create a new Site
 
-- form_for(@site) do |f|
+- form_for(@site, :html => {:class => 'site'}) do |f|
   = render :partial => 'form', :locals => {:f => f}
   .submitRow
     = submit_tag 'Set up my Models &raquo;'#

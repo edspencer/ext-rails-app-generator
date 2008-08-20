@@ -1,6 +1,6 @@
 class SitesController < ApplicationController
   
-  before_filter :find_site,    :only => [:edit, :show, :update, :destroy]
+  before_filter :find_site,    :only => [:edit, :show, :update, :destroy, :clone]
   before_filter :find_plugins, :only => [:new, :edit]
   
   # GET /sites
@@ -80,6 +80,10 @@ class SitesController < ApplicationController
       format.html { redirect_to(sites_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def clone
+    
   end
   
   protected

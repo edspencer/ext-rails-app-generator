@@ -70,6 +70,27 @@ describe SitesController do
     end
 
   end
+  
+  describe "responding to GET clone" do
+    it "should find the site" do
+      @sites.should_receive(:find).with(mock_site.id.to_s).and_return(mock_site)
+      do_get
+    end
+    
+    it "should render the clone template" do
+      do_get
+      response.should render_template(:clone)
+    end
+    
+    it "should be successful" do
+      do_get
+      response.should be_success
+    end
+    
+    def do_get
+      get :clone, :id => mock_site.id
+    end
+  end
 
   describe "responding to GET edit" do
   

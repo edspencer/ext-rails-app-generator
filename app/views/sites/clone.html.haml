@@ -1,0 +1,15 @@
+%h1= "Clone #{@site.name}"
+
+%p.big Creates an exact copy of this site.  You can keep the same name, but you probably shouldn't.
+
+- form_tag(create_clone_site_path(@site), {:class => "site"}) do
+  .formRow.name
+    %label{:for => 'site_name'} New Site Name:
+    = text_field_tag "site[name]", @site.name, :id => 'site_name'
+    
+  .error This doesn't actually work yet
+  .submitRow
+    = submit_tag "Clone"
+
+%br
+= link_to 'Back to site', @site
