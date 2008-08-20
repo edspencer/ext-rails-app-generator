@@ -1,0 +1,7 @@
+%h1 Edit model
+
+- form_for([@site, @model]) do |f|
+  = render :partial => 'form', :locals => {:f => f}
+  .submitRow= f.submit "Update"
+
+= link_to 'Back', site_path(@site)

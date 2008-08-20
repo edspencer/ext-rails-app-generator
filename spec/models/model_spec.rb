@@ -13,6 +13,10 @@ describe Model do
     Model.create!(@valid_attributes)
   end
   
+  it "should have many columns" do
+    @model.should have_many(:columns)
+  end
+  
   it "should validate presence of site_id" do
     @model.should validate_presence_of(:site_id)
   end

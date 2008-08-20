@@ -16,3 +16,9 @@ form.site fieldset .notice {
   float: right;
   width: 50%;
 }
+
+form.generate_site input {
+  margin: 20px 0;
+  font-size: 3em;
+  padding: 10px;
+}

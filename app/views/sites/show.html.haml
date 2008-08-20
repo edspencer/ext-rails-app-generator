@@ -7,7 +7,22 @@
   = link_to 'Clone this site', clone_site_path(@site)
 
 %h2 Models
+- if @site.models.empty?
+  %p No models added yet
+- else
+  %table
+    %thead
+      %tr
+        %th Model Name
+        %th # Columns
+    %tbody
+      - @site.models.each do |model|
+        %tr
+          %td= model.name
+          %td= model.columns.count
 
-- form_tag(generate_site_path(@site)) do
+= link_to 'Add a model', new_site_model_path(@site)
+
+- form_tag(generate_site_path(@site), :class => 'generate_site') do
   .submitRow
     = submit_tag "Generate"

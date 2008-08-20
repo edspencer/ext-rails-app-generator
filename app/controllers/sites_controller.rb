@@ -1,6 +1,7 @@
 class SitesController < ApplicationController
   
-  before_filter :find_site,    :only => [:edit, :show, :update, :destroy, :clone]
+  before_filter :ensure_logged_in
+  before_filter :ensure_site_found, :only => [:edit, :show, :update, :destroy, :clone, :create_clone, :generate]
   before_filter :find_plugins, :only => [:new, :edit]
   
   # GET /sites
@@ -86,15 +87,7 @@ class SitesController < ApplicationController
     
   end
   
-  protected
-  def find_site
-    @site = current_user.sites.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
-    respond_to do |format|
-      format.html {flash[:errors] = "Couldn't find that site"; redirect_to(sites_path);}
-    end
-  end
-  
+  protected  
   def find_plugins
     @plugins = Plugin.all
   end

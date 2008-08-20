@@ -1,0 +1,7 @@
+%h1 New model
+
+- form_for([@site, @model]) do |f|
+  = render :partial => 'form', :locals => {:f => f}
+  .submitRow= f.submit "Create"
+
+= link_to 'Back', site_path(@site)

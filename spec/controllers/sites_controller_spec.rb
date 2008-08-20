@@ -91,6 +91,30 @@ describe SitesController do
       get :clone, :id => mock_site.id
     end
   end
+  
+  describe "responding to POST create_clone" do
+    it "should find the site" do
+      pending("implement this")
+      @sites.should_receive(:find).with(mock_site.id.to_s).and_return(mock_site)
+      do_post
+    end
+    
+    def do_post
+      post :create_clone, :id => mock_site.id
+    end
+  end
+  
+  describe "responding to POST generate" do
+    it "should find the site" do
+      pending("implement this")
+      @sites.should_receive(:find).with(mock_site.id.to_s).and_return(mock_site)
+      do_post
+    end
+    
+    def do_post
+      post :generate, :id => mock_site.id
+    end
+  end
 
   describe "responding to GET edit" do
   

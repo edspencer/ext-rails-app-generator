@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  model_id: 1
+  name: MyString
+  column_type: MyString
+  default_value: MyString
+  appears_in_views: false
+
+two:
+  model_id: 1
+  name: MyString
+  column_type: MyString
+  default_value: MyString
+  appears_in_views: false
