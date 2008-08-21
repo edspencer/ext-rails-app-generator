@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  model_id: 1
+  column_id: 1
+  validation_type: MyString
+
+two:
+  model_id: 1
+  column_id: 1
+  validation_type: MyString

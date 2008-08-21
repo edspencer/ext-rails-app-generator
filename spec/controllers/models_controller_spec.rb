@@ -16,34 +16,22 @@ describe ModelsController do
   end
 
   describe "responding to GET /sites/:site_id/models" do
-    it_should_behave_like "Ensures logged in"
-    it_should_behave_like "Ensures site found"
-
-    it "should succeed" do
-      do_request
-      response.should be_success
+    before(:each) do
+      @site = mock_model(Site, :id => 1, :models => mock_model(Array, :find => []))
+      @sites = mock_model(Array, :find => @site)
+      @user = mock_model(User, :id => 1, :sites => @sites)
+      
+      controller.stub!(:current_user).and_return(@user)
     end
-
-    it "should render the 'index' template" do
+    
+    it "should redirect to show site" do
       do_request
-      response.should render_template('index')
-    end
-  
-    it "should find all models" do
-      @site.models.should_receive(:find).with(:all)
-      do_request
-    end
-  
-    it "should assign the found models for the view" do
-      @site.models.should_receive(:find).and_return([mocked_model])
-      do_request
-      assigns[:models].should == [mocked_model]
+      response.should redirect_to(site_path(@site))
     end
     
     def do_request
       get :index, :site_id => @site.id
     end
-
   end
 
   describe "responding to GET /models.xml" do

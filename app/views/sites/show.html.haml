@@ -18,7 +18,7 @@
     %tbody
       - @site.models.each do |model|
         %tr
-          %td= model.name
+          %td= link_to model.name, edit_site_model_path(@site, model)
           %td= model.columns.count
 
 = link_to 'Add a model', new_site_model_path(@site)

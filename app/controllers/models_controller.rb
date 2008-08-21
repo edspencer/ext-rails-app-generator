@@ -10,7 +10,7 @@ class ModelsController < ApplicationController
     @models = @site.models.find(:all)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { redirect_to(@site)}
       format.xml  { render :xml => @models }
     end
   end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080820192611) do
+ActiveRecord::Schema.define(:version => 20080821094319) do
 
   create_table "columns", :force => true do |t|
     t.integer  "model_id"
@@ -74,5 +74,12 @@ ActiveRecord::Schema.define(:version => 20080820192611) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
+  create_table "validations", :force => true do |t|
+    t.integer  "column_id"
+    t.string   "validation_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
