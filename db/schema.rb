@@ -9,7 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080821094319) do
+ActiveRecord::Schema.define(:version => 20080821113317) do
+
+  create_table "associations", :force => true do |t|
+    t.integer  "model_id"
+    t.integer  "foreign_model_id"
+    t.string   "association_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "columns", :force => true do |t|
     t.integer  "model_id"

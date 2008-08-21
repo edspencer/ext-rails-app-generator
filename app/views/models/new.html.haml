@@ -1,5 +1,7 @@
 %h1 New model
 
+%p.big Associations and validations appear on the next screen
+
 - form_for([@site, @model], :html => {:class => 'site'}) do |f|
   = render :partial => 'form', :locals => {:f => f}
   .submitRow= f.submit "Create"

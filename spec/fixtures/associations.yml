@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  model_id: 1
+  foreign_model_id: 1
+  association_type: MyString
+
+two:
+  model_id: 1
+  foreign_model_id: 1
+  association_type: MyString

@@ -3,5 +3,9 @@
 - form_for([@site, @model], :html => {:class => 'site'}) do |f|
   = render :partial => 'form', :locals => {:f => f}
   .submitRow= f.submit "Update"
+  
+%h2 Associations
+
+%h2 Validations
 
 = link_to 'Back', site_path(@site)

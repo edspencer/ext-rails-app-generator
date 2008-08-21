@@ -17,6 +17,14 @@ describe Model do
     @model.should have_many(:columns)
   end
   
+  it "should have many validations" do
+    @model.should have_many(:validations)
+  end
+  
+  it "should have many associations" do
+    @model.should have_many(:associations)
+  end
+  
   it "should validate presence of site_id" do
     @model.should validate_presence_of(:site_id)
   end
