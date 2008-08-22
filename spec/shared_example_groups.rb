@@ -5,6 +5,9 @@ module SetupMockModels
     @association  = mock_model(Association, :id => 1, :null_object => true)
     @associations = mock_model(Array, :find => @association)
     
+    @validation   = mock_model(Validation, :id => 1, :null_object => true)
+    @validations  = mock_model(Array, :find => @validation)
+    
     @model  = mock_model(Model, :id => 1, :null_object => true)
     @models = mock_model(Array, :find => @model)
     
@@ -12,6 +15,7 @@ module SetupMockModels
     @sites = mock(Array, :find => @site, :paginate => [@site])
     
     @model.stub!(:associations).and_return(@associations)
+    @model.stub!(:validations).and_return(@validations)
     @site.stub!(:models).and_return(@models)
     
     @user = mock_model(User, :id => 1, :sites => @sites)

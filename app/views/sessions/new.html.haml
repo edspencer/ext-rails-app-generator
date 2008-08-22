@@ -1,0 +1,11 @@
+%h1 Log in
+
+- form_tag session_path do
+  .formRow
+    %label{:for => 'email'} Email Address:
+    = text_field_tag :email, params[:email]
+  .formRow
+    %label{:for => 'password'} Password:
+    = password_field_tag :password, nil
+  .submitRow
+    = submit_tag "Log in"
