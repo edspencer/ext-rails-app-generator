@@ -132,6 +132,10 @@ describe ModelsController do
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
     
+    before(:each) do
+      @models.stub!(:new).and_return(mocked_model)
+    end
+    
     it "should succeed" do
       do_request
       response.should be_success
@@ -143,12 +147,12 @@ describe ModelsController do
     end
   
     it "should create a new model" do
-      Model.should_receive(:new)
+      @models.should_receive(:new)
       do_request
     end
   
     it "should assign the new model for the view" do
-      Model.should_receive(:new).and_return(mocked_model)
+      @models.should_receive(:new).and_return(mocked_model)
       do_request
       assigns[:model].should equal(mocked_model)
     end
@@ -192,35 +196,35 @@ describe ModelsController do
 
   end
 
-  describe "responding to POST /models" do
-    before(:each) do
-      Model.stub!(:new).and_return(mocked_model)
-    end
-    
+  describe "responding to POST /models" do  
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
+    
+    before(:each) do
+      @models.stub!(:new).and_return(mocked_model)
+    end
     
     describe "with successful save" do
   
       it "should create a new model" do
-        Model.should_receive(:new).with({'these' => 'params'}).and_return(mocked_model)
+        @models.should_receive(:new).with({'these' => 'params'}).and_return(mocked_model)
         do_request
       end
       
       it "should assign the model to the current site" do
-        Model.stub!(:new).and_return(mocked_model)
+        @models.stub!(:new).and_return(mocked_model)
         mocked_model.should_receive(:site=).with(@site).and_return(true)
         do_request
       end
 
       it "should assign the created model for the view" do
-        Model.stub!(:new).and_return(mocked_model)
+        @models.stub!(:new).and_return(mocked_model)
         do_request
         assigns(:model).should equal(mocked_model)
       end
 
       it "should redirect to the created model" do
-        Model.stub!(:new).and_return(mocked_model)
+        @models.stub!(:new).and_return(mocked_model)
         do_request
         response.should redirect_to(site_models_url(mocked_model))
       end
@@ -230,19 +234,19 @@ describe ModelsController do
     describe "with failed save" do
     
       it "should create a new model" do
-        Model.should_receive(:new).with({'these' => 'params'}).and_return(mocked_model(:save => false))
+        @models.should_receive(:new).with({'these' => 'params'}).and_return(mocked_model(:save => false))
         do_request
       end
     
       it "should assign the invalid model for the view" do
-        Model.stub!(:new).and_return(mocked_model(:save => false))
+        @models.stub!(:new).and_return(mocked_model(:save => false))
         do_request
         assigns(:model).should equal(mocked_model)
       end
     
       it "should re-render the 'new' template" do
         mocked_model.stub!(:save).and_return(false)
-        Model.stub!(:new).and_return(mocked_model)
+        @models.stub!(:new).and_return(mocked_model)
         do_request
         response.should render_template('new')
       end
@@ -323,7 +327,7 @@ describe ModelsController do
   describe "responding to DELETE /models/1" do
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
-  
+    
     it "should find the model requested" do
       @site.models.should_receive(:find).with("1").and_return(mocked_model)
       do_request
@@ -331,7 +335,7 @@ describe ModelsController do
   
     it "should call destroy on the found model" do
       @site.models.stub!(:find).and_return(mocked_model)
-      mocked_model.should_receive(:destroy)
+      mocked_model.should_receive(:destroy).and_return(true)
       do_request
     end
   

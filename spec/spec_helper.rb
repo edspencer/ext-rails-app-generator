@@ -6,6 +6,7 @@ require 'spec'
 require 'spec/rails'
 
 require File.expand_path(File.dirname(__FILE__) + "/shared_example_groups")
+require File.expand_path(File.dirname(__FILE__) + "/crud_shared_example_groups")
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these

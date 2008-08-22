@@ -28,3 +28,6 @@
 [submodule "vendor/plugins/will_paginate"]
 	path = vendor/plugins/will_paginate
 	url = git://github.com/mislav/will_paginate.git
+[submodule "vendor/plugins/make_resourceful"]
+	path = vendor/plugins/make_resourceful
+	url = git://github.com/adzap/make_resourceful.git

@@ -2,85 +2,45 @@ class ModelsController < ApplicationController
   
   before_filter :ensure_logged_in
   before_filter :ensure_site_found
-  before_filter :ensure_model_found, :only => [:show, :edit, :destroy, :update]
   
-  # GET /models
-  # GET /models.xml
-  def index
-    @models = @site.models.find(:all)
-
-    respond_to do |format|
+  make_resourceful do
+    actions :all
+    belongs_to :site
+    
+    before :create do
+      @model.site = @site
+    end
+    
+    response_for :index do |format|
       format.html { redirect_to(@site)}
-      format.xml  { render :xml => @models }
+      format.xml  { render :xml => @models}
     end
-  end
-
-  # GET /models/1
-  # GET /models/1.xml
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @model }
+    
+    response_for :show do |format|
+      format.html
+      format.xml { render :xml => @model}
     end
-  end
-
-  # GET /models/new
-  # GET /models/new.xml
-  def new
-    @model = Model.new(:site_id => @site)
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @model }
+    
+    response_for :create do |format|
+      format.html { redirect_to(site_models_path(@model)) }
+      format.xml  { render :xml => @model, :status => :created, :location => @model }
     end
-  end
-
-  # GET /models/1/edit
-  def edit
-  end
-
-  # POST /models
-  # POST /models.xml
-  def create
-    @model = Model.new(params[:model])
-    @model.site = @site
-
-    respond_to do |format|
-      if @model.save
-        flash[:notice] = 'Model was successfully created.'
-        format.html { redirect_to(site_models_path(@model)) }
-        format.xml  { render :xml => @model, :status => :created, :location => @model }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @model.errors, :status => :unprocessable_entity }
-      end
+    
+    response_for :update do |format|
+      format.html { redirect_to(site_models_path(@model)) }
+      format.xml  { head :ok }
     end
-  end
-
-  # PUT /models/1
-  # PUT /models/1.xml
-  def update
-    respond_to do |format|
-      if @model.update_attributes(params[:model])
-        flash[:notice] = 'Model was successfully updated.'
-        format.html { redirect_to(site_models_path(@model)) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @model.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /models/1
-  # DELETE /models/1.xml
-  def destroy
-    @model.destroy
-
-    respond_to do |format|
+    
+    response_for :destroy do |format|
       format.html { redirect_to(site_models_path(@model.site)) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  #found by ensure_site_found, so cache here for make_resourceful
+  def parent_object
+    @site
   end
 
 end

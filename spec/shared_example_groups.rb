@@ -2,14 +2,14 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 module SetupUserAndSite
   def do_setup
-    @association = mock_model(Association, :id => 1, :null_object => true)
+    @association  = mock_model(Association, :id => 1, :null_object => true)
     @associations = mock_model(Array, :find => @association)
     
     @model  = mock_model(Model, :id => 1, :null_object => true)
     @models = mock_model(Array, :find => @model)
     
     @site  = mock_model(Site, :id => 1, :null_object => true)
-    @sites = mock(Array, :find => @site)
+    @sites = mock(Array, :find => @site, :paginate => [@site])
     
     @model.stub!(:associations).and_return(@associations)
     @site.stub!(:models).and_return(@models)

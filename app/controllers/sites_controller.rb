@@ -1,94 +1,58 @@
 class SitesController < ApplicationController
   
   before_filter :ensure_logged_in
-  before_filter :ensure_site_found, :only => [:edit, :show, :update, :destroy, :clone, :create_clone, :generate]
+  before_filter :ensure_site_found, :only => [:clone, :create_clone, :generate]
   before_filter :find_plugins, :only => [:new, :edit]
   
-  # GET /sites
-  # GET /sites.xml
-  def index
-    @sites = current_user.sites.paginate :page => params[:page]
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @sites }
+  make_resourceful do
+    actions :all
+    belongs_to :user
+    
+    before :create do
+      @site.user = current_user
+    end
+    
+    response_for :index do |format|
+      format.html
+      format.xml  { render :xml => @sites}
+    end
+    
+    response_for :show do |format|
+      format.html
+      format.xml { render :xml => @site}
     end
   end
-
-  # GET /sites/1
-  # GET /sites/1.xml
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @site }
-    end
-  end
-
-  # GET /sites/new
-  # GET /sites/new.xml
-  def new
-    @site = Site.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @site }
-    end
-  end
-
-  # GET /sites/1/edit
-  def edit
-  end
-
-  # POST /sites
-  # POST /sites.xml
-  def create
-    @site = Site.new(params[:site])
-    @site.user = current_user
-
-    respond_to do |format|
-      if @site.save
-        flash[:notice] = 'Site was successfully created.'
-        format.html { redirect_to(@site) }
-        format.xml  { render :xml => @site, :status => :created, :location => @site }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /sites/1
-  # PUT /sites/1.xml
-  def update
-    respond_to do |format|
-      if @site.update_attributes(params[:site])
-        flash[:notice] = 'Site was successfully updated.'
-        format.html { redirect_to(@site) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @site.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /sites/1
-  # DELETE /sites/1.xml
-  def destroy
-    @site.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(sites_url) }
-      format.xml  { head :ok }
-    end
-  end
-  
+    
+  # additional actions
   def clone
     
   end
   
+  def create_clone
+    
+  end
+  
+  def generate
+    
+  end
+
   protected  
   def find_plugins
     @plugins = Plugin.all
+  end
+  
+  def parent_object
+    current_user
+  end
+  
+  private
+  
+  def current_objects
+    @current_objects ||= current_user.sites.paginate :page => params[:page]
+  end
+  
+  # FIXME: we shouldn't have to do this... should be automatic I think?
+  def current_object
+    @current_object ||= current_user.sites.find(params[:id])
   end
 end
