@@ -32,4 +32,28 @@ class ApplicationController < ActionController::Base
       format.xml  {flash[:error] = "Couldn't find that site"; redirect_to(sites_path);}
     end
   end
+  
+  # be sure to ensure_site_found before this
+  def ensure_model_found
+    @model = @site.models.find(params[:model_id] || params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    respond_to do |format|
+      format.html {flash[:error] = "Couldn't find that model"; redirect_to(site_models_path(@site));}
+      
+      #TODO: see http://midlandsweb.lighthouseapp.com/projects/15705-rails-application-generator/tickets/2
+      format.xml  {flash[:error] = "Couldn't find that model"; redirect_to(site_models_path(@site));}
+    end
+  end
+  
+  # be sure to ensure_model_found before this
+  def ensure_association_found
+    @association = @model.associations.find(params[:association_id] || params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    respond_to do |format|
+      format.html {flash[:error] = "Couldn't find that association"; redirect_to(edit_site_model_path(@site, @model));}
+      
+      #TODO: see http://midlandsweb.lighthouseapp.com/projects/15705-rails-application-generator/tickets/2
+      format.xml  {flash[:error] = "Couldn't find that association"; redirect_to(edit_site_model_path(@site, @model));}
+    end
+  end
 end

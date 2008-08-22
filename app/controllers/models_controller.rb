@@ -2,7 +2,7 @@ class ModelsController < ApplicationController
   
   before_filter :ensure_logged_in
   before_filter :ensure_site_found
-  before_filter :find_model, :only => [:show, :edit, :destroy, :update]
+  before_filter :ensure_model_found, :only => [:show, :edit, :destroy, :update]
   
   # GET /models
   # GET /models.xml
@@ -82,14 +82,5 @@ class ModelsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
-  protected
 
-  def find_model
-    @model = @site.models.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
-    respond_to do |format|
-      format.html {flash[:error] = "Sorry, that model could not be found"; redirect_to(site_path(@site))}
-    end
-  end
 end

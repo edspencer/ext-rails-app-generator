@@ -1,0 +1,12 @@
+<h1>Editing association</h1>
+
+<% form_for(@association) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @association %> |
+<%= link_to 'Back', associations_path %>

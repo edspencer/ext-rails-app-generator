@@ -1,7 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :sites, :member => {:generate => :post, :clone => :get, :create_clone => :post} do |site|
     site.resources :models do |model|
-      model.resources :fields
+      model.resources :columns
+      model.resources :associations
+      model.resources :validations
     end
   end
 
