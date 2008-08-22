@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe AssociationsController do
+  include CrudSetup, SetupMockModels
 
   def mock_association(stubs={})
       stubs = {
@@ -15,231 +16,120 @@ describe AssociationsController do
     @mock_association ||= mock_model(Association, stubs)
   end
   
+  before(:each) do
+    setup_mock_models
+    @model_name   = 'Association'
+    @parent_model = @model
+    setup_crud_names
+  end
+  
   describe "responding to GET index" do
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
     it_should_behave_like "Ensures model found"
-
-    it "should expose all associations as @associations" do
-      @associations.should_receive(:find).with(:all).and_return([mock_association])
-      do_request
-      assigns[:associations].should == [mock_association]
-    end
-
-    describe "with mime type of xml" do
-  
-      it "should render all associations as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        @associations.should_receive(:find).with(:all).and_return(associations = mock("Array of Associations"))
-        associations.should_receive(:to_xml).and_return("generated XML")
-        do_request
-        response.body.should == "generated XML"
-      end
-    
-    end
+    it_should_behave_like "CRUD GET index (HTML)"
+    it_should_behave_like "CRUD GET index (XML)"
     
     def do_request
       get :index, :site_id => @site.id, :model_id => @model.id
     end
-
   end
 
   describe "responding to GET show" do
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
     it_should_behave_like "Ensures model found"
-  
-    it "should expose the requested association as @association" do
-      @associations.should_receive(:find).with("1").and_return(mock_association)
-      do_request
-      assigns[:association].should equal(mock_association)
-    end
-    
-    describe "with mime type of xml" do
-  
-      it "should render the requested association as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        @associations.should_receive(:find).with("1").and_return(mock_association)
-        mock_association.should_receive(:to_xml).and_return("generated XML")
-        do_request
-        response.body.should == "generated XML"
-      end
-  
-    end
+    it_should_behave_like "CRUD GET show (HTML)"
+    it_should_behave_like "CRUD GET show (XML)"
     
     def do_request
       get :show, :id => "1", :site_id => @site.id, :model_id => @model.id
     end
-    
   end
   
   describe "responding to GET new" do
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
     it_should_behave_like "Ensures model found"
-    
-    before(:each) do
-      @associations.stub!(:new).and_return(mock_association)
-    end
-  
-    it "should expose a new association as @association" do
-      @associations.should_receive(:new).and_return(mock_association)
-      do_request
-      assigns[:association].should equal(mock_association)
-    end
+    it_should_behave_like "CRUD GET new"
     
     def do_request
       get :new, :site_id => @site.id, :model_id => @model.id
     end
-  
   end
   
   describe "responding to GET edit" do
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
     it_should_behave_like "Ensures model found"
-  
-    it "should expose the requested association as @association" do
-      @associations.should_receive(:find).with("1").and_return(mock_association)
-      do_request
-      assigns[:association].should equal(mock_association)
-    end
-    
+    it_should_behave_like "CRUD GET edit"
+
     def do_request
       get :edit, :id => "1", :site_id => @site.id, :model_id => @model.id
     end
-  
   end
   
   describe "responding to POST create" do
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
     it_should_behave_like "Ensures model found"
+    it_should_behave_like "CRUD POST create"
     
     before(:each) do
-      @associations.stub!(:new).and_return(mock_association(:save => true))
-    end
-  
-    describe "with valid params" do
-      
-      it "should expose a newly created association as @association" do
-        @associations.should_receive(:new).with({'these' => 'params'}).and_return(mock_association(:save => true))
-        do_request
-        assigns(:association).should equal(mock_association)
-      end
-  
-      it "should redirect to the created association" do
-        @associations.stub!(:new).and_return(mock_association(:save => true))
-        do_request
-        response.should redirect_to(edit_site_model_path(@site.id, @model.id))
-      end
-      
-      it "should link the association with the model" do
-        mock_association.should_receive(:model=).with(@model).and_return(true)
-        do_request
-      end
-      
+      @stubbed_model.stub!(:model=).and_return(true)
     end
     
-    describe "with invalid params" do
-  
-      it "should expose a newly created but unsaved association as @association" do
-        @associations.stub!(:new).with({'these' => 'params'}).and_return(mock_association(:save => false))
-        do_request
-        assigns(:association).should equal(mock_association)
-      end
-  
-      it "should re-render the 'new' template" do
-        mock_association.stub!(:save).and_return(false)
-        do_request
-        response.should render_template('new')
-      end
-      
+    it "should redirect to the created model after successful creation" do
+      @stubbed_model.stub!(:save).and_return(true)
+      @finder_scope.stub!(:new).and_return(@stubbed_model)
+      do_request
+      response.should redirect_to(edit_site_model_url(@site, @model))
     end
     
     def do_request
       post :create, :association => {:these => 'params'}, :site_id => @site.id, :model_id => @model.id
     end
-    
   end
     
   describe "responding to PUT update" do
     it_should_behave_like "Ensures logged in"
     it_should_behave_like "Ensures site found"
     it_should_behave_like "Ensures model found"
-  
-    describe "with valid params" do
-  
-      it "should update the requested association" do
-        @associations.should_receive(:find).with("1").and_return(mock_association)
-        mock_association.should_receive(:update_attributes).with({'these' => 'params'})
-        do_request
-      end
-  
-      it "should expose the requested association as @association" do
-        @associations.stub!(:find).and_return(mock_association(:update_attributes => true))
-        do_request
-        assigns(:association).should equal(mock_association)
-      end
-  
-      it "should redirect to the association" do
-        @associations.stub!(:find).and_return(mock_association(:update_attributes => true))
-        do_request
-        response.should redirect_to(edit_site_model_path(@site.id, @model.id))
-      end
-  
+    it_should_behave_like "CRUD PUT update"
+    
+    before(:each) do
+      @stubbed_model.stub!(:model=).and_return(true)
     end
     
-    describe "with invalid params" do
-  
-      it "should update the requested association" do
-        @associations.should_receive(:find).with("1").and_return(mock_association)
-        mock_association.should_receive(:update_attributes).with({'these' => 'params'})
-        do_request
-      end
-  
-      it "should expose the association as @association" do
-        @associations.stub!(:find).and_return(mock_association(:update_attributes => false))
-        do_request
-        assigns(:association).should equal(mock_association)
-      end
-  
-      it "should re-render the 'edit' template" do
-        @associations.stub!(:find).and_return(mock_association(:update_attributes => false))
-        do_request
-        response.should render_template('edit')
-      end
-  
+    it "should redirect to the edit model screen after successful update" do
+      @stubbed_model.stub!(:save).and_return(true)
+      @stubbed_model.stub!(:update_attributes).and_return(true)
+      
+      @finder_scope.stub!(:find).and_return(@stubbed_model)
+      do_request
+      response.should redirect_to(edit_site_model_url(@site, @model))
     end
     
     def do_request
       put :update, :id => "1", :association => {:these => 'params'}
     end
-  
   end
   
-  # describe "responding to DELETE destroy" do
-  #   it_should_behave_like "Ensures logged in"
-  #   it_should_behave_like "Ensures site found"
-  #   it_should_behave_like "Ensures model found"
-  # 
-  #   it "should destroy the requested association" do
-  #     @associations.should_receive(:find).with("1").and_return(mock_association)
-  #     mock_association.should_receive(:destroy).and_return(true)
-  #     do_request
-  #   end
-  # 
-  #   it "should redirect to the associations list" do
-  #     @associations.stub!(:find).and_return(mock_association(:destroy => true))
-  #     do_request
-  #     response.should redirect_to(edit_site_model_path(@site.id, @model.id))
-  #   end
-  #   
-  #   def do_request
-  #     delete :destroy, :id => "1"
-  #   end
-  # 
-  # end
-  # 
+  describe "responding to DELETE destroy" do
+    it_should_behave_like "Ensures logged in"
+    it_should_behave_like "Ensures site found"
+    it_should_behave_like "Ensures model found"
+    it_should_behave_like "CRUD DELETE destroy"
+  
+    it "should redirect to the edit model screen" do
+      @associations.stub!(:find).and_return(mock_association(:destroy => true))
+      do_request
+      response.should redirect_to(edit_site_model_path(@site.id, @model.id))
+    end
+    
+    def do_request
+      delete :destroy, :id => "1"
+    end
+  end
 
 end

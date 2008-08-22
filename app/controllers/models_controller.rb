@@ -32,7 +32,7 @@ class ModelsController < ApplicationController
     end
     
     response_for :destroy do |format|
-      format.html { redirect_to(site_models_path(@model.site)) }
+      format.html { redirect_to(site_models_path(@site)) }
       format.xml  { head :ok }
     end
   end

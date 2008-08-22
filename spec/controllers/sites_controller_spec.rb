@@ -1,6 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe SitesController do
+  include CrudSetup, SetupMockModels
+  
+  before(:each) do
+    setup_mock_models
+    @model_name = 'Site'
+    setup_crud_names
+  end
   
   def mock_site(stubs={})
     stubs = {:id => 123, 
@@ -14,13 +21,13 @@ describe SitesController do
   
   describe "responding to GET index" do
     it_should_behave_like "Ensures logged in"
-
+  
     it "should expose all sites as @sites" do
       @sites.should_receive(:paginate).with(:page => nil).and_return([@site])
       do_request
       assigns[:sites].should == [@site]
     end
-
+  
     describe "with mime type of xml" do
       
       it "should render all sites as xml" do
@@ -36,7 +43,7 @@ describe SitesController do
     def do_request
       get :index
     end
-
+  
   end
 
   describe "responding to GET show" do

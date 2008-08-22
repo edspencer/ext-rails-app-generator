@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-module SetupUserAndSite
-  def do_setup
+module SetupMockModels
+  def setup_mock_models
     @association  = mock_model(Association, :id => 1, :null_object => true)
     @associations = mock_model(Array, :find => @association)
     
@@ -21,12 +21,6 @@ module SetupUserAndSite
 end
 
 describe "Ensures logged in", :shared => true do
-  include SetupUserAndSite
-  
-  before(:each) do
-    do_setup
-  end
-  
   it "should allow the request to proceed if logged in" do
     do_request
     
@@ -56,10 +50,6 @@ describe "Ensures logged in", :shared => true do
 end
 
 describe "Ensures site found", :shared => true do
-  before(:each) do
-    do_setup
-  end
-  
   describe "if the site is found" do
     before(:each) do
       @sites.stub!(:find).and_return(@site)
@@ -96,10 +86,6 @@ describe "Ensures site found", :shared => true do
 end
 
 describe "Ensures model found", :shared => true do
-  before(:each) do
-    do_setup
-  end
-  
   describe "if the model is found" do
     before(:each) do
       @models.stub!(:find).and_return(@model)
