@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080824172930) do
+ActiveRecord::Schema.define(:version => 20080824181001) do
 
   create_table "associations", :force => true do |t|
     t.integer  "model_id"
@@ -98,5 +98,23 @@ ActiveRecord::Schema.define(:version => 20080824172930) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "worker_queue_items", :force => true do |t|
+    t.string   "task_name"
+    t.string   "task_group"
+    t.string   "class_name"
+    t.string   "method_name"
+    t.text     "argument_hash"
+    t.text     "data",          :limit => 268435457
+    t.datetime "start"
+    t.integer  "status",                             :default => 0, :null => false
+    t.string   "error_message"
+    t.string   "filename"
+    t.integer  "lock_version",                       :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "worker_queue_items", ["status"], :name => "index_worker_queue_items_on_status"
 
 end

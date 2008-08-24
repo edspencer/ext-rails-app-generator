@@ -37,3 +37,6 @@
 [submodule "vendor/rails_versions/v2.1.0"]
 	path = vendor/rails_versions/v2.1.0
 	url = git://github.com/rails/rails.git
+[submodule "vendor/plugins/worker_queue"]
+	path = vendor/plugins/worker_queue
+	url = git://github.com/edspencer/worker_queue.git
