@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080821113317) do
+ActiveRecord::Schema.define(:version => 20080824095655) do
 
   create_table "associations", :force => true do |t|
     t.integer  "model_id"
@@ -62,12 +62,14 @@ ActiveRecord::Schema.define(:version => 20080821113317) do
     t.string   "state"
     t.string   "scm"
     t.string   "rails_version"
-    t.boolean  "vendor_rails",   :default => false
+    t.boolean  "vendor_rails",          :default => false
     t.string   "test_framework"
     t.string   "views_type"
-    t.boolean  "capify",         :default => false
+    t.boolean  "capify",                :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "generation_start_time"
+    t.datetime "generation_stop_time"
   end
 
   create_table "users", :force => true do |t|
