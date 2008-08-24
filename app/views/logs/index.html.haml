@@ -1,0 +1,20 @@
+%h1= "Logs for #{@site.name}"
+
+%p
+  = link_to '&laquo; Back to site', site_path(@site)
+  |
+  = link_to 'Clear log', clear_site_logs_path(@site), :method => :delete
+
+- if @logs.empty?
+  %p No logs yet - logs are automatically generated to give you feedback while the site is being generated
+- else
+  %table
+    %thead
+      %tr
+        %th Time
+        %th Message
+    %tbody
+      - @logs.each do |log|
+        %tr
+          %td= log.created_at.strftime("%d/%m/%Y %H:%M:%S")
+          %td= log.message

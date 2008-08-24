@@ -5,6 +5,8 @@
   = link_to 'Edit this site', edit_site_path(@site)
   |
   = link_to 'Clone this site', clone_site_path(@site)
+  |
+  = link_to "View log (#{@site.logs.count})", site_logs_path(@site)
 
 %h2 Models
 - if @site.models.empty?
@@ -22,6 +24,28 @@
           %td= model.columns.count
 
 = link_to 'Add a model', new_site_model_path(@site)
+
+%h2 Controllers
+- if @site.controllers.empty?
+  %p No controllers added yet
+- else
+  %table
+    %thead
+      %tr
+        %th Controller Name
+        %th Model
+        %th HTML
+        %th XML
+        %th JSON
+    %tbody
+      - @site.controllers.each do |controller|
+        %tr
+          %td= link_to controller.name, edit_site_controller_path(@site, controller)
+          %td= controller.model.name
+          %td= controller.responds_to_html ? 'Yes' : 'No'
+          %td= controller.responds_to_xml  ? 'Yes' : 'No'
+          %td= controller.responds_to_json ? 'Yes' : 'No'
+
 
 - form_tag(generate_site_path(@site), :class => 'generate_site') do
   .submitRow

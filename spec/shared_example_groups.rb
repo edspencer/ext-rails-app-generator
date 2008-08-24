@@ -11,12 +11,16 @@ module SetupMockModels
     @model  = mock_model(Model, :id => 1, :null_object => true)
     @models = mock_model(Array, :find => @model)
     
+    @log  = mock_model(Log, :id => 1, :null_object => true)
+    @logs = mock_model(Array, :find => @log, :clear => nil)
+    
     @site  = mock_model(Site, :id => 1, :null_object => true)
     @sites = mock(Array, :find => @site, :paginate => [@site])
     
     @model.stub!(:associations).and_return(@associations)
     @model.stub!(:validations).and_return(@validations)
     @site.stub!(:models).and_return(@models)
+    @site.stub!(:logs).and_return(@logs)
     
     @user = mock_model(User, :id => 1, :sites => @sites)
     controller.stub!(:current_user).and_return(@user)

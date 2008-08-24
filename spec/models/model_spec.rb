@@ -25,6 +25,10 @@ describe Model do
     @model.should have_many(:associations)
   end
   
+  it "should have many controllers" do
+    @model.should have_many(:controllers)
+  end
+  
   it "should validate presence of site_id" do
     @model.should validate_presence_of(:site_id)
   end

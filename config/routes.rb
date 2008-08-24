@@ -4,7 +4,10 @@ ActionController::Routing::Routes.draw do |map|
       model.resources :columns
       model.resources :associations
       model.resources :validations
+      model.resources :controllers
     end
+    
+    site.resources :logs, :collection => {:clear => :delete}
   end
 
   map.logout   '/logout',   :controller => 'sessions', :action => 'destroy'

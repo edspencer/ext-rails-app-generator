@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  site_id: 1
+  model_id: 1
+  name: MyString
+  lft: 1
+  rgt: 1
+  parent_id: 1
+  namespace: MyString
+  responds_to_html: false
+  responds_to_xml: false
+  responds_to_json: false
+
+two:
+  site_id: 1
+  model_id: 1
+  name: MyString
+  lft: 1
+  rgt: 1
+  parent_id: 1
+  namespace: MyString
+  responds_to_html: false
+  responds_to_xml: false
+  responds_to_json: false

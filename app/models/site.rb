@@ -3,6 +3,7 @@ class Site < ActiveRecord::Base
   
   belongs_to :user
   has_many :models
+  has_many :controllers, :through => :models
   has_many :selected_plugins
   has_many :plugins, :through => :selected_plugins
   has_many :logs
@@ -27,6 +28,8 @@ class Site < ActiveRecord::Base
   
   # kicks off the generation process
   def generate!
+    update_attributes(:generation_start_time => Time.now)
+    
     generate_rails!
     logs.create(:message => 'Generated Rails')
     
@@ -39,11 +42,18 @@ class Site < ActiveRecord::Base
     scm_object.install_plugins
     logs.create(:message => "Installed #{selected_plugins.count} plugins")
     
+    if capify
+      system("cd ../#{self.underscored_name} && Capify .")
+      logs.create(:message => "Capified with Capistrano")
+    end
+    
     scm_object.track_all_files
     logs.create(:message => "Tracked all files")
     
     scm_object.push_to_server
     logs.create(:message => "Pushed files to server.  Generation completed.")
+    
+    update_attributes(:generation_stop_time => Time.now)
   end
   
   # protected

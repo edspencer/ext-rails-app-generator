@@ -17,6 +17,14 @@ describe Site do
     @site.should belong_to(:user)
   end
   
+  it "should have many models" do
+    @site.should have_many(:models)
+  end
+  
+  it "should have many controllers" do
+    @site.should have_many(:controllers)
+  end
+  
   it "should have many logs" do
     @site.should have_many(:logs)
   end

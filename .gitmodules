@@ -40,3 +40,6 @@
 [submodule "vendor/plugins/worker_queue"]
 	path = vendor/plugins/worker_queue
 	url = git://github.com/edspencer/worker_queue.git
+[submodule "vendor/plugins/awesome_nested_set"]
+	path = vendor/plugins/awesome_nested_set
+	url = git://github.com/collectiveidea/awesome_nested_set.git
