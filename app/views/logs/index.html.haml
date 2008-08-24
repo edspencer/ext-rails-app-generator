@@ -18,3 +18,16 @@
         %tr
           %td= log.created_at.strftime("%d/%m/%Y %H:%M:%S")
           %td= log.message
+
+- if @site.has_been_generated?
+  %h2 This site has been generated
+  %table
+    %tr
+      %th{:style => 'width: 150px;'} Generation started:
+      %td= @site.generation_start_time.strftime("%d/%m/%Y %H:%M:%S")
+    %tr
+      %th Generation finished:
+      %td= @site.generation_stop_time.strftime("%d/%m/%Y %H:%M:%S")
+    %tr
+      %th Generation time:
+      %td= "#{pluralize(@site.generation_time, 'second')}"

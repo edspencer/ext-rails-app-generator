@@ -22,6 +22,10 @@ class Site < ActiveRecord::Base
     res['total_time'].to_i / res['count'].to_i
   end
   
+  def has_been_generated?
+    generation_stop_time ? true : false
+  end
+  
   def underscored_name
     name.gsub(" ", "_").gsub(/[^A-Za-z0-9\-\_]/, '')
   end

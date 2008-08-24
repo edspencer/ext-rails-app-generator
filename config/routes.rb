@@ -1,13 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :sites, :member => {:generate => :post, :clone => :get, :create_clone => :post} do |site|
-    site.resources :models do |model|
-      model.resources :columns
-      model.resources :associations
-      model.resources :validations
-      model.resources :controllers
-    end
-    
     site.resources :logs, :collection => {:clear => :delete}
+    
+    site.resources :models do |model|
+      model.resources :columns, :associations, :validations, :controllers
+    end
   end
 
   map.logout   '/logout',   :controller => 'sessions', :action => 'destroy'
