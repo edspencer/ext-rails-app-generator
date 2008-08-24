@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080824095655) do
+ActiveRecord::Schema.define(:version => 20080824172930) do
 
   create_table "associations", :force => true do |t|
     t.integer  "model_id"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(:version => 20080824095655) do
     t.string   "column_type"
     t.string   "default_value"
     t.boolean  "appears_in_views", :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "logs", :force => true do |t|
+    t.integer  "site_id"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -5,6 +5,7 @@ class Site < ActiveRecord::Base
   has_many :models
   has_many :selected_plugins
   has_many :plugins, :through => :selected_plugins
+  has_many :logs
   
   def scm_object
     @scm_object ||= Scm.new_scm(self.scm, self)
@@ -27,12 +28,22 @@ class Site < ActiveRecord::Base
   # kicks off the generation process
   def generate!
     generate_rails!
+    logs.create(:message => 'Generated Rails')
+    
     remove_unwanted_files!
+    logs.create(:message => 'Removed unwanted files')
+    
     scm_object.initialize_repository
+    logs.create(:message => "Initialized #{scm} repository")
+    
     scm_object.install_plugins
+    logs.create(:message => "Installed #{selected_plugins.count} plugins")
     
     scm_object.track_all_files
+    logs.create(:message => "Tracked all files")
+    
     scm_object.push_to_server
+    logs.create(:message => "Pushed files to server.  Generation completed.")
   end
   
   # protected

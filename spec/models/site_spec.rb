@@ -17,6 +17,10 @@ describe Site do
     @site.should belong_to(:user)
   end
   
+  it "should have many logs" do
+    @site.should have_many(:logs)
+  end
+  
   it "should return the correct generate time" do
     @site.generation_time.should == 3.minutes
   end
@@ -47,12 +51,12 @@ describe Site, "when generating" do
     @site = Site.new(:rails_version => 'edge')
   end
   
-  it "should have an scm object" do
-    @site.scm = 'git'
-    
-    @site.scm_object.should_not be(nil)
-    @site.scm_object.class.to_s.should == 'Git'
-  end
+  # it "should have an scm object" do
+  #   @site.scm = 'git'
+  #   
+  #   @site.scm_object.should_not be(nil)
+  #   @site.scm_object.class.to_s.should == 'Git'
+  # end
   
   it "should return the correct rails generate path" do
     @site.rails_generate_path.should == 'vendor/rails_versions/edge/railties/bin/rails'
