@@ -21,6 +21,11 @@ describe Site do
     @site.generation_time.should == 3.minutes
   end
   
+  it "should give an underscored name" do
+    @site.name = "Ed's site"
+    @site.underscored_name.should == 'Eds_site'
+  end
+  
   it "should return the correct average generation time" do
     create_site 5.minutes.ago, 0.minutes.ago
     create_site 7.minutes.ago, 0.minutes.ago
@@ -34,5 +39,22 @@ describe Site do
   def create_site generation_start_time, generation_stop_time
     Site.create!(:user_id => 1, :name => 'Test', :generation_start_time => generation_start_time,
                                                  :generation_stop_time  => generation_stop_time)
+  end
+end
+
+describe Site, "when generating" do
+  before(:each) do
+    @site = Site.new(:rails_version => 'edge')
+  end
+  
+  it "should have an scm object" do
+    @site.scm = 'git'
+    
+    @site.scm_object.should_not be(nil)
+    @site.scm_object.class.to_s.should == 'Git'
+  end
+  
+  it "should return the correct rails generate path" do
+    @site.rails_generate_path.should == 'vendor/rails_versions/edge/railties/bin/rails'
   end
 end

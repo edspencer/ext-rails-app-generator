@@ -31,3 +31,9 @@
 [submodule "vendor/plugins/make_resourceful"]
 	path = vendor/plugins/make_resourceful
 	url = git://github.com/adzap/make_resourceful.git
+[submodule "vendor/rails_versions/edge"]
+	path = vendor/rails_versions/edge
+	url = git://github.com/rails/rails.git
+[submodule "vendor/rails_versions/v2.1.0"]
+	path = vendor/rails_versions/v2.1.0
+	url = git://github.com/rails/rails.git
