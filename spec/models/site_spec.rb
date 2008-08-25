@@ -33,13 +33,6 @@ describe Site do
     @site.generation_time.should == 3.minutes
   end
   
-  it "should know whether or not it has been generated" do
-    @site.has_been_generated?.should be(true)
-    
-    @site.generation_stop_time = nil
-    @site.has_been_generated?.should be(false)
-  end
-  
   it "should give an underscored name" do
     @site.name = "Ed's site"
     @site.underscored_name.should == 'Eds_site'

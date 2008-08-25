@@ -33,7 +33,8 @@ class SitesController < ApplicationController
   end
   
   def generate
-    
+    @site.generate!
+    redirect_to site_logs_path(@site)
   end
 
   protected  

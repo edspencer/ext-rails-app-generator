@@ -19,7 +19,16 @@
           %td= log.created_at.strftime("%d/%m/%Y %H:%M:%S")
           %td= log.message
 
-- if @site.has_been_generated?
+- if @site.pending_generation?
+  %h2 This site is currently pending generation
+  - t = WorkerQueue.waiting_tasks.length
+  %p= "There #{t == 1 ? 'is' : 'are'} #{pluralize(t, 'generation')} pending, including yours"
+  
+- elsif @site.generating?
+  %h2 This site is currently being generated
+  %p= "Generation started #{time_ago_in_words(@site.generation_start_time, true)} ago"
+  
+- elsif @site.generated?
   %h2 This site has been generated
   %table
     %tr

@@ -1,3 +1,5 @@
+require 'acts_as_state_machine'
+
 class Site < ActiveRecord::Base
   validates_presence_of :user_id, :name
   
@@ -8,8 +10,27 @@ class Site < ActiveRecord::Base
   has_many :plugins, :through => :selected_plugins
   has_many :logs
   
+  acts_as_state_machine :initial => :new
+  
+  state :new
+  state :pending_generation, :enter => Proc.new {|site| site.do_generate_in_background}
+  state :generating
+  state :generated
+  
+  event :generate do
+    transitions :from => [:new, :generated], :to => :pending_generation
+  end
+  
+  event :generation_started do
+    transitions :from => :pending_generation, :to => :generating
+  end
+  
+  event :generation_completed do
+    transitions :from => :generating, :to => :generated
+  end
+  
   def scm_object
-    @scm_object ||= Scm.new_scm(self.scm, self)
+    @scm_object ||= Git.new(self) #Scm.new_scm(self.scm, self)
   end
   
   def generation_time
@@ -22,17 +43,27 @@ class Site < ActiveRecord::Base
     res['total_time'].to_i / res['count'].to_i
   end
   
-  def has_been_generated?
-    generation_stop_time ? true : false
-  end
-  
   def underscored_name
     name.gsub(" ", "_").gsub(/[^A-Za-z0-9\-\_]/, '')
   end
   
+  def do_generate_in_background
+    work = WorkerQueue::WorkerQueueItem.new
+    work.class_name    = 'Site'
+    work.method_name   = 'do_generate'
+    work.argument_hash = {:id => self.id}
+    work.save!
+  end
+  
+  def self.do_generate(args = {})
+    find(args[:id]).do_generate
+  end
+  
   # kicks off the generation process
-  def generate!
+  def do_generate(in_background = true)
     update_attributes(:generation_start_time => Time.now)
+    logs.create(:message => 'Started generate process')
+    generation_started!
     
     generate_rails!
     logs.create(:message => 'Generated Rails')
@@ -58,6 +89,8 @@ class Site < ActiveRecord::Base
     logs.create(:message => "Pushed files to server.  Generation completed.")
     
     update_attributes(:generation_stop_time => Time.now)
+    logs.create(:message => 'Finished generate process')
+    generation_completed!
   end
   
   # protected
