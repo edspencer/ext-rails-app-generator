@@ -4,6 +4,6 @@ class Association < ActiveRecord::Base
   belongs_to :model
   belongs_to :foreign_model, :class_name => 'Model'
   
-  validates_presence_of :association_type, :model_id, :foreign_model_id
+  validates_presence_of  :association_type, :model_id, :foreign_model_id
   validates_inclusion_of :association_type, :in => ASSOCIATION_TYPES
 end
