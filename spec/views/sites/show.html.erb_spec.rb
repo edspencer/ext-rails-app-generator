@@ -7,8 +7,5 @@ describe "/sites/show.html.erb" do
     assigns[:site] = @site = stub_model(Site)
   end
 
-  it "should render attributes in <p>" do
-    render "/sites/show.html.erb"
-  end
 end
 

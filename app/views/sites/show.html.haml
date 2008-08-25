@@ -46,7 +46,10 @@
           %td= controller.responds_to_xml  ? 'Yes' : 'No'
           %td= controller.responds_to_json ? 'Yes' : 'No'
 
-
-- form_tag(generate_site_path(@site), :class => 'generate_site') do
-  .submitRow
-    = submit_tag "Generate"
+%h2 Options
+- if @site.new? || @site.generated?
+  - form_tag(generate_site_path(@site), :class => 'generate_site') do
+    .submitRow
+      = submit_tag "Generate"
+- else
+  %p= "You can't generate this site right now because it is already #{@site.state.humanize}"

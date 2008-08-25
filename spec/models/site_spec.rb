@@ -5,29 +5,10 @@ describe Site do
     @site = Site.new(:generation_start_time => 5.minutes.ago, :generation_stop_time => 2.minutes.ago)
   end
   
-  it "should validate presence of user_id" do
-    @site.should validate_presence_of(:user_id)
-  end
-  
-  it "should validate presence of name" do
-    @site.should validate_presence_of(:name)
-  end
-  
-  it "should belong to a user" do
-    @site.should belong_to(:user)
-  end
-  
-  it "should have many models" do
-    @site.should have_many(:models)
-  end
-  
-  it "should have many controllers" do
-    @site.should have_many(:controllers)
-  end
-  
-  it "should have many logs" do
-    @site.should have_many(:logs)
-  end
+  it_should_be_createable :with => {:user_id => 1, :name => 'test'}
+  it_should_validate_presence_of :user_id, :name
+  it_should_belong_to :user
+  it_should_have_many :models, :controllers, :logs
   
   it "should return the correct generate time" do
     @site.generation_time.should == 3.minutes

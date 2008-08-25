@@ -1,43 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Model do
-  before(:each) do
-    @valid_attributes = {
-      :name => "value for name",
-      :site_id => "1"
-    }
-    @model = Model.new
-  end
-
-  it "should create a new instance given valid attributes" do
-    Model.create!(@valid_attributes)
-  end
+  it_should_validate_presence_of :site_id, :name
+  it_should_be_createable :with => {:name => 'some name', :site_id => "1"}
   
-  it "should have many columns" do
-    @model.should have_many(:columns)
-  end
-  
-  it "should have many validations" do
-    @model.should have_many(:validations)
-  end
-  
-  it "should have many associations" do
-    @model.should have_many(:associations)
-  end
-  
-  it "should have many controllers" do
-    @model.should have_many(:controllers)
-  end
-  
-  it "should validate presence of site_id" do
-    @model.should validate_presence_of(:site_id)
-  end
-  
-  it "should validate presence of name" do
-    @model.should validate_presence_of(:name)
-  end
-  
-  it "should belong to a site" do
-    @model.should belong_to(:site)
-  end
+  it_should_have_many :columns, :validations, :associations, :controllers
+  it_should_belong_to :site  
 end

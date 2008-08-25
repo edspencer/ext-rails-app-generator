@@ -16,9 +16,6 @@
 [submodule "vendor/plugins/rspec_rails"]
 	path = vendor/plugins/rspec_rails
 	url = git://github.com/dchelimsky/rspec-rails.git
-[submodule "vendor/plugins/rspec_on_rails_matchers"]
-	path = vendor/plugins/rspec_on_rails_matchers
-	url = git://github.com/joshknowles/rspec-on-rails-matchers.git
 [submodule "vendor/plugins/ext_mvc_rails"]
 	path = vendor/plugins/ext_mvc_rails
 	url = git://github.com/edspencer/ext-mvc-rails.git
@@ -46,3 +43,6 @@
 [submodule "vendor/plugins/acts_as_state_machine"]
 	path = vendor/plugins/acts_as_state_machine
 	url = git://github.com/omghax/acts_as_state_machine.git
+[submodule "vendor/plugins/rspec_validation_expectations"]
+	path = vendor/plugins/rspec_validation_expectations
+	url = git://github.com/edspencer/rspec_validation_expectations.git

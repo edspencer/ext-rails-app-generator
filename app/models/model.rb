@@ -6,5 +6,4 @@ class Model < ActiveRecord::Base
   has_many :controllers
   
   validates_presence_of :site_id, :name
-
 end
